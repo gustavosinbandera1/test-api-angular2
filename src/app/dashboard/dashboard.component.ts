@@ -11,10 +11,6 @@ students: any[];
   constructor(private http: ApiService) { }
 
   ngOnInit() {
-    this.getAllCourses();
-    this.getAllStudents();
-
-
   }
 
   getAllCourses() {

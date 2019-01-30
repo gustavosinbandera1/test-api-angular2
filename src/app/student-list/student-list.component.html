@@ -1,1 +1,24 @@
-<h1>hola</h1>
+<form [formGroup]="form" (ngSubmit)="addStudent()">
+  <vaadin-text-field
+    label="Name"
+    formControlName="name"
+    ngDefaultControl>
+  </vaadin-text-field>
+  <vaadin-text-field
+    label="Age"
+    formControlName="age"
+    ngDefaultControl>
+  </vaadin-text-field>
+  <vaadin-text-field
+    label="Student code"
+    formControlName="studentCode"
+    ngDefaultControl>
+  </vaadin-text-field>
+  <vaadin-button (click)="addStudent()"> Add Student </vaadin-button>
+</form>
+
+<vaadin-grid [items]="student">
+  <vaadin-grid-column path="name" header="First name"></vaadin-grid-column>
+  <vaadin-grid-column path="age" header="Age"> </vaadin-grid-column>
+  <vaadin-grid-column path="studentCode" header="Code"> </vaadin-grid-column>
+</vaadin-grid>

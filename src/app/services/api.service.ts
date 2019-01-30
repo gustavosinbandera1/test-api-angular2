@@ -39,4 +39,36 @@ export class ApiService {
       })
     );
   }
+
+ /*  createStudent(student) {
+    console.log('vamos a crear estudiante', student);
+
+
+     this.http.post<any>(`${this._url}/students`, student)
+      .pipe(
+        map((data) => {
+          console.log('saliendo de map', data);
+
+          return data;
+        })
+      );
+
+  } */
+
+   createStudent(student): Observable<any> {
+    console.log('vamos a crear estudiante', student);
+
+
+    return this.http.post<any>(`${this._url}/students`, student)
+      .pipe(
+        map((data) => {
+          console.log('saliendo de map', data);
+
+          return data;
+        })
+      );
+
+  }
+
+
 }
