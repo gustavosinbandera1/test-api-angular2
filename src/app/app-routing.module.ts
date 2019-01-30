@@ -14,7 +14,10 @@ const routes: Routes = [
       { path: 'cursos', component: CursoComponent},
       { path: 'notas', component: NotaComponent}
     ]
-}];
+},
+{path: '', redirectTo: 'dashboard', pathMatch: 'full'}
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
