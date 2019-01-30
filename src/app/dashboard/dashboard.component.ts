@@ -7,13 +7,27 @@ import { ApiService } from '../services/api.service';
 })
 export class DashboardComponent implements OnInit {
 courses: any[];
+students: any[];
   constructor(private http: ApiService) { }
 
   ngOnInit() {
+    this.getAllCourses();
+    this.getAllStudents();
+
+
+  }
+
+  getAllCourses() {
     this.http.getCourses().subscribe(courses => {
       this.courses = courses;
       console.log('el servicio : ', courses);
+    });
+  }
 
+  getAllStudents() {
+    this.http.getStudents().subscribe(students => {
+      this.students = students;
+      console.log('el servicio students: ', students);
     });
   }
 
