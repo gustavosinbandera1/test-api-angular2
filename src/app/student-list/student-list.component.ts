@@ -16,6 +16,7 @@ import { ApiService } from '../services/api.service';
 
 export class StudentListComponent implements OnInit {
   student: Student[] = [];
+  _id = null;
 
   form = new FormGroup({
     name: new FormControl(''),
@@ -39,19 +40,17 @@ export class StudentListComponent implements OnInit {
     const age = this.form.value.age;
     const studentCode = this.form.value.studentCode;
     const student: Student = {
-      name: 'andress',
+      name: name,
       age: age,
       studentCode: studentCode
     };
     this.api.createStudent(student).subscribe((data) => {
-      console.log('el usuario se cre', data);
-
+      this._id = data._id;
+      this.student = [
+        ...this.student,
+        data
+      ];
     });
-    this.student = [
-      ...this.student,
-      new Student(this.form.value.name, this.form.value.age, this.form.value.studentCode)
-    ];
-    /* this.form.reset(); */
   }
 
 }

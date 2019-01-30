@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   private _url: any = 'http://localhost:3000';
+ /*  private _url: any = 'https://nodejs-express-api.herokuapp.com'; */
   constructor(private http: HttpClient) { }
 
   getNotesByStudentId(studentId) {
@@ -40,22 +41,7 @@ export class ApiService {
     );
   }
 
- /*  createStudent(student) {
-    console.log('vamos a crear estudiante', student);
-
-
-     this.http.post<any>(`${this._url}/students`, student)
-      .pipe(
-        map((data) => {
-          console.log('saliendo de map', data);
-
-          return data;
-        })
-      );
-
-  } */
-
-   createStudent(student): Observable<any> {
+  createStudent(student): Observable<any> {
     console.log('vamos a crear estudiante', student);
 
 
