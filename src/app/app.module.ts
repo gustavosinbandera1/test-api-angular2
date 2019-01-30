@@ -8,12 +8,16 @@ import { StudentListComponent } from './student-list/student-list.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import {ApiService} from './services/api.service';
+import { CursoComponent } from './curso/curso.component';
+import { NotaComponent } from './nota/nota.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    StudentListComponent
+    StudentListComponent,
+    CursoComponent,
+    NotaComponent
   ],
   imports: [
     BrowserModule,
