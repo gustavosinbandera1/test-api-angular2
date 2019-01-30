@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentListComponent } from './student-list/student-list.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import {ApiService} from './services/api.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,9 +17,10 @@ import { StudentListComponent } from './student-list/student-list.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
