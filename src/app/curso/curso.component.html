@@ -14,10 +14,10 @@
     </mat-form-field>
 
 
-    <button mat-button (click)="registerCourse()">Register Course</button>
+    <button mat-button (click)="createCourse()">Register Course</button>
 </div>
 
-<table mat-table mat-table [dataSource]="course" class="mat-elevation-z8" >
+<table mat-table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
 
 <ng-container matColumnDef="name">
   <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -34,16 +34,13 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let curso">
         <button (click)='deleteCurso(curso)'>delete</button>
-        <button (click)='updateCurso(curso)'>update</button>
-        <button (click)='viewCurso(curso)'>view </button>
-
+        <button (click)='openModalUpdate(curso)'>update</button>
+        <button (click)='openModal(curso)'>view course</button>
       </td>
     </ng-container>
 
-
-
-<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
 
 </table>
 

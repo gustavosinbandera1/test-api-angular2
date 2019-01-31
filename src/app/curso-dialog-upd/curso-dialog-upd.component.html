@@ -1,0 +1,22 @@
+<div class='dialogTitle'  class="mat-elevation-z4">
+
+</div>
+<mat-dialog-content class="mat-elevation-z4">
+  <ul *ngFor='let curso of curso'>
+      <mat-form-field appearance="standard">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Placeholder" [formControl]="cursoName" value = "{{curso.name}}" (input)='onNameChange($event.target.value)'  >
+          <mat-hint>Nombre</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Codigo</mat-label>
+        <input matInput placeholder="Codigo" [formControl]="cursoCode"  value = "{{curso.cursoCode}}" (input)='onCodeChange($event.target.value)'>
+        <mat-hint>Codigo</mat-hint>
+      </mat-form-field>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+ <button mat-button [mat-dialog-close]='true' (click)='saveData()'>ACEPTAR</button>
+
+</mat-dialog-actions>

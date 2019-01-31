@@ -4,10 +4,6 @@ import { FormControl } from '@angular/forms';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-export interface Food {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-nota',
@@ -25,7 +21,6 @@ export class NotaComponent implements OnInit, AfterViewInit {
   temp: any[] = [];
 
 public dataSource = new MatTableDataSource;
-// dataSource: MatTableDataSource<MemberModel>;
 @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private api: ApiService,
@@ -97,9 +92,7 @@ public dataSource = new MatTableDataSource;
     });
   }
 
-  updateNota() {
 
-  }
 
   openModal(data: any) {
     this.temp.push(data);
@@ -114,6 +107,6 @@ public dataSource = new MatTableDataSource;
         this.temp = [];
       });
 
-    }
+  }
 
 }

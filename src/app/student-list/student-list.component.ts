@@ -1,12 +1,13 @@
-import { Component, OnInit,  ViewChild, Inject} from '@angular/core';
+import { Component, OnInit,  ViewChild, Inject, ChangeDetectorRef, AfterViewInit} from '@angular/core';
 import { Student } from '../models/student';
 
 import { ApiService } from '../services/api.service';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { StudentDialogComponent } from '../student-dialog/student-dialog.component';
-import { map } from 'rxjs/operators';
+import { StudentDialogUpdComponent } from '../student-dialog-upd/student-dialog-upd.component';
 import { Observable } from 'rxjs';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-student-list',
@@ -14,23 +15,36 @@ import { Observable } from 'rxjs';
   styleUrls: ['./student-list.component.css']
 })
 
-export class StudentListComponent implements OnInit {
+export class StudentListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'age', 'studentCode', 'actions'];
-  student: Student[] = [];
+  students: any = [];
   studentNotes: any[] = [];
   name = new FormControl();
   age = new FormControl();
   studentCode = new FormControl();
-  dataSource = this.student;
   object = {};
+  temp: any[] = [];
 
-  constructor(private api: ApiService,  public dialog: MatDialog) {
+
+  public dataSource = new MatTableDataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private api: ApiService,
+      public dialog: MatDialog,
+      private changeDetectorRefs: ChangeDetectorRef) {
+
     this.api.getItems('estudiantes').subscribe((students) => {
-      this.student = students;
+    /*   this.dataSource = students; */
+      this.students = students;
+      this.dataSource.data = students;
       console.log('los estudiantes', students);
-      this.dataSource = students;
+
     });
-   }
+  }
+
+   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit() {
 
@@ -38,25 +52,31 @@ export class StudentListComponent implements OnInit {
 
 
 
-  registerStudent() {
+  createStudent() {
 
     this.api.createItem(this.object, 'estudiantes').subscribe((data) => {
-      this.student = [
-        ...this.student,
+      this.students = [
+        ...this.students,
         data
       ];
+       this.dataSource.data = this.students;
+      console.log('lo que creamos', this.students);
+
     });
   }
 
-  updateStudent(student) {
-    console.log('update student', student);
 
-  }
 
   deleteStudent(student) {
+    this.dataSource.data = [];
     console.log('delete student', student);
     this.api.deleteItem(student._id, 'estudiantes').subscribe(data => {
+      console.log('el dato subscrito:', data );
 
+      this.students.splice(this.students.findIndex(({_id}) => _id === data._id), 1);
+      console.log('el array reducido', this.students);
+
+      this.dataSource.data = this.students;
     });
   }
 
@@ -98,12 +118,29 @@ export class StudentListComponent implements OnInit {
 
   }
 
-  getStudentNotes(student): Observable<any> {
-    return this.api.getNotesByStudentId(student._id); /* .subscribe(data => {
-      console.log('los datosque se recibieron despues de buscar notas', data);
-      this.studentNotes = data;
+  openModalUpdate(data: any) {
+      this.temp.push(data);
+      console.log('modal update', data);
 
-    }); */
+      const dialogConfig2 = new MatDialogConfig();
+      dialogConfig2.disableClose = true;
+      dialogConfig2.autoFocus = true;
+      dialogConfig2.data = {
+        data: this.temp
+      };
+      const dialogRef = this.dialog.open(StudentDialogUpdComponent, dialogConfig2);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('se cerro la ventana modal 2', result);
+        this.temp = [];
+
+      });
+
+
   }
+
+
+    getStudentNotes(student): Observable<any> {
+    return this.api.getNotesByStudentId(student._id);
+    }
 
 }
