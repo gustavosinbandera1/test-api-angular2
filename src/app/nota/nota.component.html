@@ -1,0 +1,50 @@
+<!-- <h4>Basic mat-select</h4>
+<mat-form-field>
+  <mat-select placeholder="Favorite food">
+    <mat-option *ngFor="let food of foods" [value]="food.value">
+      {{food.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h4>Basic native select</h4>
+<mat-form-field>
+  <select matNativeControl required>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+</mat-form-field> -->
+<div class='row'>
+    <div class="col">
+    <mat-form-field>
+      <mat-select placeholder="Curso">
+        <mat-option *ngFor="let course of courses" [value]="course.name">
+          {{course.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-select placeholder="Estudiante">
+        <mat-option *ngFor="let student of students" [value]="student._id">
+          {{student.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Nombre evaluacion" value="">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Calificacion" value="">
+    </mat-form-field>
+  </div>
+    <div class='col'>
+      <button mat-flat-button color="primary" (click)='createNote()'>Crear</button>
+    </div>
+</div>

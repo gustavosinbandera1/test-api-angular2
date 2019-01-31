@@ -25,7 +25,7 @@ export class StudentListComponent implements OnInit {
   object = {};
 
   constructor(private api: ApiService,  public dialog: MatDialog) {
-    this.api.getStudents().subscribe((students) => {
+    this.api.getItems('estudiantes').subscribe((students) => {
       this.student = students;
       console.log('los estudiantes', students);
       this.dataSource = students;
@@ -40,7 +40,7 @@ export class StudentListComponent implements OnInit {
 
   registerStudent() {
 
-    this.api.createStudent(this.object).subscribe((data) => {
+    this.api.createItem(this.object, 'estudiantes').subscribe((data) => {
       this.student = [
         ...this.student,
         data
@@ -55,7 +55,7 @@ export class StudentListComponent implements OnInit {
 
   deleteStudent(student) {
     console.log('delete student', student);
-    this.api.deleteItem(student._id, 'students').subscribe(data => {
+    this.api.deleteItem(student._id, 'estudiantes').subscribe(data => {
 
     });
   }

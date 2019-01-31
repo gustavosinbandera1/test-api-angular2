@@ -19,11 +19,12 @@ export class CursoComponent  {
 
 
   constructor(private api: ApiService) {
-    this.api.getCourses().subscribe((courses) => {
+    this.api.getItems('cursos').subscribe((courses) => {
       this.course = courses;
       console.log('los cursos', courses);
       this.dataSource = courses;
     });
+
 
   }
 
@@ -31,7 +32,7 @@ export class CursoComponent  {
 
   registerCourse() {
 
-    this.api.createCourse(this.object).subscribe((data) => {
+    this.api.createItem(this.object, 'cursos').subscribe((data) => {
       this.course = [
         ...this.course,
         data

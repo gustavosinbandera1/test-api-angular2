@@ -14,14 +14,14 @@ students: any[];
   }
 
   getAllCourses() {
-    this.http.getCourses().subscribe(courses => {
+    this.http.getItems('cursos').subscribe(courses => {
       this.courses = courses;
       console.log('el servicio : ', courses);
     });
   }
 
   getAllStudents() {
-    this.http.getStudents().subscribe(students => {
+    this.http.getItems('estudiantes').subscribe(students => {
       this.students = students;
       console.log('el servicio students: ', students);
     });

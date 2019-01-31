@@ -20,8 +20,8 @@ export class ApiService {
         );
   }
 
-  getStudents() {
-    return this.http.get<any>(`${this._url}/estudiantes`)
+  getItems(endpoint) {
+    return this.http.get<any>(`${this._url}/${endpoint}`)
       .pipe(
         map((data) => {
           if (data['results']) {
@@ -33,38 +33,9 @@ export class ApiService {
       );
   }
 
-  getCourses(): Observable<any> {
-    return this.http.get<any>(`${this._url}/cursos`)
-    .pipe(
-      map((data) => {
-        if (data['results']) {
-          return data['results'];
-        } else {
-          return data;
-        }
-      })
-    );
-  }
-
-  createStudent(student): Observable<any> {
-    console.log('vamos a crear estudiante', student);
-
-
-    return this.http.post<any>(`${this._url}/estudiantes`, student)
-      .pipe(
-        map((data) => {
-          console.log('saliendo de map', data);
-
-          return data;
-        })
-      );
-  }
-
-  createCourse(course): Observable<any> {
-    console.log('vamos a crear curso', course);
-
-
-    return this.http.post<any>(`${this._url}/cursos`, course)
+  createItem(object, endpoint): Observable<any> {
+    console.log(`vamos a crear ${endpoint} `, object);
+    return this.http.post<any>(`${this._url}/${endpoint}`, object)
       .pipe(
         map((data) => {
           console.log('saliendo de map', data);
@@ -72,6 +43,8 @@ export class ApiService {
         })
       );
   }
+
+
 
   deleteItem(itemId, endpoint): Observable<any> {
     console.log('vamos a eliminar ', itemId, endpoint);
