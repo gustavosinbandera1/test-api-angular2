@@ -12,7 +12,7 @@ import { Course } from '../models/curso';
 export class CursoComponent  {
   displayedColumns: string[] = ['name', 'cursoCode', 'actions'];
   course: Course[] = [];
-  dataSource = this.course;
+  //dataSource = this.course;
   object = {};
   name = new FormControl();
   cursoCode = new FormControl();
@@ -22,7 +22,7 @@ export class CursoComponent  {
     this.api.getItems('cursos').subscribe((courses) => {
       this.course = courses;
       console.log('los cursos', courses);
-      this.dataSource = courses;
+      //this.dataSource = courses;
     });
 
 
@@ -39,7 +39,13 @@ export class CursoComponent  {
       ];
     });
   }
-
+  deleteCourse(course) {
+    console.log('delete course', course);
+    this.api.deleteItem(course._id, 'cursos').subscribe(data => {
+      console.log('se elimino el curso');
+      this.dataSource = [...this.course];
+    });
+  }
 
   onNameChange() {
     console.log('el cambio', this.name.value);

@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { FormControl } from '@angular/forms';
 import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { template } from '@angular/core/src/render3';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 export interface Food {
   value: string;
   viewValue: string;
@@ -16,7 +14,7 @@ export interface Food {
   templateUrl: './nota.component.html',
   styleUrls: ['./nota.component.css']
 })
-export class NotaComponent implements OnInit {
+export class NotaComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'nombre_evaluacion', 'calificacion' , 'curso', 'actions'];
   courses: any = [];
   students: any = [];
@@ -26,7 +24,13 @@ export class NotaComponent implements OnInit {
   object: any = {};
   temp: any[] = [];
 
-  constructor(private api: ApiService, public dialog: MatDialog) {
+public dataSource = new MatTableDataSource;
+// dataSource: MatTableDataSource<MemberModel>;
+@ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private api: ApiService,
+        public dialog: MatDialog,
+        private changeDetectorRefs: ChangeDetectorRef) {
 
     this.api.getItems('cursos').subscribe((courses) => {
       this.courses = courses;
@@ -41,11 +45,19 @@ export class NotaComponent implements OnInit {
     this.api.getItems('notas').subscribe((notes) => {
       console.log('las notas', notes);
       this.notes = notes;
+      this.dataSource.data = notes;
     });
+  }
+
+
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit() {
   }
+
 
   onNameTestChange() {
      console.log('el cambio', this.nombre_evaluacion.value);
@@ -73,11 +85,16 @@ export class NotaComponent implements OnInit {
         ...this.notes,
         data
       ];
+      this.dataSource.data = this.notes;
     });
   }
 
-  deleteNota() {
 
+  deleteNote(note) {
+    this.api.deleteItem(note._id, 'notas').subscribe(data => {
+      this.notes.splice(this.notes.findIndex(({_id}) => _id === data._id), 1);
+      this.dataSource.data = this.notes;
+    });
   }
 
   updateNota() {
@@ -85,7 +102,6 @@ export class NotaComponent implements OnInit {
   }
 
   openModal(data: any) {
-    console.log('el dato para el modal', data);
     this.temp.push(data);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
@@ -95,9 +111,9 @@ export class NotaComponent implements OnInit {
       };
       const dialogRef = this.dialog.open(NoteDialogComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
-        console.log('se cerro la ventana modal');
         this.temp = [];
       });
 
     }
+
 }

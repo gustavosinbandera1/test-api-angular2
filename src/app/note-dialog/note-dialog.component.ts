@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { ApiService } from "../services/api.service";
+import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-note-dialog',
   templateUrl: './note-dialog.component.html',
@@ -63,6 +63,7 @@ actualCourse: any;
 
 
   }
+
   onNameStudentChange(student, nameChange) {
     console.log( student, nameChange, this.name_user);
     this.upd_name_student = nameChange;

@@ -33,7 +33,7 @@
 
 
 
-<table mat-table mat-table [dataSource]="notes" class="mat-elevation-z8" >
+<table  mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" >
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -61,7 +61,7 @@
       <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let nota">
-            <button  (click)='deleteNota(nota)'>delete</button>
+            <button  (click)='deleteNote(nota)'>delete</button>
             <button  (click)='openModal(nota)'>update</button>
 
           </td>
@@ -73,5 +73,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
 
   </table>
+
 
 
