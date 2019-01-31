@@ -57,6 +57,9 @@ export class CursoComponent  {
 
   deleteCurso(curso) {
     console.log('delete curso', curso);
+    this.api.deleteItem(curso._id, 'cursos').subscribe(data => {
+
+    });
   }
 
   viewCurso(curso) {

@@ -11,12 +11,17 @@ export class ApiService {
  /*  private _url: any = 'https://nodejs-express-api.herokuapp.com'; */
   constructor(private http: HttpClient) { }
 
-  getNotesByStudentId(studentId) {
-    return this.http.get<any>(`${this._url}/api/notas/${studentId}`);
+  getNotesByStudentId(studentId): Observable<any> {
+    return this.http.get<any>(`${this._url}/api/notas/${studentId}`)
+        .pipe(
+          map((data) => {
+            return data;
+          })
+        );
   }
 
   getStudents() {
-    return this.http.get<any>(`${this._url}/students`)
+    return this.http.get<any>(`${this._url}/estudiantes`)
       .pipe(
         map((data) => {
           if (data['results']) {
@@ -28,7 +33,7 @@ export class ApiService {
       );
   }
 
-  getCourses() {
+  getCourses(): Observable<any> {
     return this.http.get<any>(`${this._url}/cursos`)
     .pipe(
       map((data) => {
@@ -45,7 +50,7 @@ export class ApiService {
     console.log('vamos a crear estudiante', student);
 
 
-    return this.http.post<any>(`${this._url}/students`, student)
+    return this.http.post<any>(`${this._url}/estudiantes`, student)
       .pipe(
         map((data) => {
           console.log('saliendo de map', data);
@@ -66,6 +71,17 @@ export class ApiService {
           return data;
         })
       );
+  }
+
+  deleteItem(itemId, endpoint): Observable<any> {
+    console.log('vamos a eliminar ', itemId, endpoint);
+
+    return this.http.delete<any>(`${this._url}/${endpoint}/${itemId}`)
+            .pipe(
+              map((data) => {
+                return data;
+              })
+            );
   }
 
 
