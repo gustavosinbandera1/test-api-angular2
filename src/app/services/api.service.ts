@@ -53,7 +53,19 @@ export class ApiService {
           return data;
         })
       );
+  }
 
+  createCourse(course): Observable<any> {
+    console.log('vamos a crear curso', course);
+
+
+    return this.http.post<any>(`${this._url}/cursos`, course)
+      .pipe(
+        map((data) => {
+          console.log('saliendo de map', data);
+          return data;
+        })
+      );
   }
 
 

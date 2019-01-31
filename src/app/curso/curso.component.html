@@ -1,3 +1,50 @@
-<p>
-  curso works!
-</p>
+
+<div class='col'>
+    <mat-form-field appearance="legacy">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Ingress course name" [formControl]='name' (change)='onNameChange()'>
+      <mat-hint>Name</mat-hint>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="standard">
+      <mat-label>Code</mat-label>
+      <input matInput placeholder="Placeholder" [formControl]='cursoCode' (change)='onCodeChange()'>
+      <mat-hint>Code</mat-hint>
+    </mat-form-field>
+
+
+    <button mat-button (click)="registerCourse()">Register Course</button>
+</div>
+
+<table mat-table mat-table [dataSource]="course" class="mat-elevation-z8" >
+
+<ng-container matColumnDef="name">
+  <th mat-header-cell *matHeaderCellDef> Name </th>
+  <td mat-cell *matCellDef="let curso"> {{curso.name}} </td>
+</ng-container>
+
+
+<ng-container matColumnDef="cursoCode">
+    <th mat-header-cell *matHeaderCellDef> Code </th>
+    <td mat-cell *matCellDef="let curso"> {{curso.cursoCode}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let curso">
+        <button (click)='deleteCurso(curso)'>delete</button>
+        <button (click)='updateCurso(curso)'>update</button>
+        <button (click)='viewCurso(curso)'>view course</button>
+
+      </td>
+    </ng-container>
+
+
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+
+</table>
+
+

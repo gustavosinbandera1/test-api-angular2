@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-grid';
-import '@vaadin/vaadin-text-field';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit,  ViewChild} from '@angular/core';
 import { Student } from '../models/student';
 
 
 import { ApiService } from '../services/api.service';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-student-list',
@@ -15,42 +13,64 @@ import { ApiService } from '../services/api.service';
 })
 
 export class StudentListComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'age', 'studentCode', 'actions'];
   student: Student[] = [];
-  _id = null;
-
-  form = new FormGroup({
-    name: new FormControl(''),
-    age: new FormControl(''),
-    studentCode: new FormControl('')
-  });
+  name = new FormControl();
+  age = new FormControl();
+  studentCode = new FormControl();
+  dataSource = this.student;
+  object = {};
 
   constructor(private api: ApiService) {
     this.api.getStudents().subscribe((students) => {
       this.student = students;
       console.log('los estudiantes', students);
-
+      this.dataSource = students;
     });
    }
 
   ngOnInit() {
   }
 
-  addStudent() {
-    const name = this.form.value.name;
-    const age = this.form.value.age;
-    const studentCode = this.form.value.studentCode;
-    const student: Student = {
-      name: name,
-      age: age,
-      studentCode: studentCode
-    };
-    this.api.createStudent(student).subscribe((data) => {
-      this._id = data._id;
+
+
+  registerStudent() {
+
+    this.api.createStudent(this.object).subscribe((data) => {
       this.student = [
         ...this.student,
         data
       ];
     });
   }
+
+  updateStudent(student) {
+    console.log('update student', student);
+
+  }
+
+  deleteStudent(student) {
+    console.log('delete student', student);
+  }
+
+  viewStudent(student) {
+    console.log('update student', student);
+  }
+
+  onNameChange() {
+    console.log('el cambio', this.name.value);
+    this.object['name'] = this.name.value;
+  }
+
+  onAgeChange() {
+    console.log('el cambio', this.age.value);
+    this.object['age'] = this.age.value;
+  }
+
+  onCodeChange() {
+    console.log('el cambio', this.studentCode.value);
+    this.object['studentCode'] = this.studentCode.value;
+  }
+
 
 }
