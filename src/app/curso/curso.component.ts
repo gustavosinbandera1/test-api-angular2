@@ -64,7 +64,7 @@ export class CursoComponent  {
   }
 
   viewCurso(curso) {
-    console.log('update curso', curso);
+    console.log('ver curso', curso);
   }
 
 

@@ -1,50 +1,77 @@
-<!-- <h4>Basic mat-select</h4>
-<mat-form-field>
-  <mat-select placeholder="Favorite food">
-    <mat-option *ngFor="let food of foods" [value]="food.value">
-      {{food.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
 
-<h4>Basic native select</h4>
-<mat-form-field>
-  <select matNativeControl required>
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="mercedes">Mercedes</option>
-    <option value="audi">Audi</option>
-  </select>
-</mat-form-field> -->
 <div class='row'>
     <div class="col">
     <mat-form-field>
       <mat-select placeholder="Curso">
-        <mat-option *ngFor="let course of courses" [value]="course.name">
+        <mat-option *ngFor="let course of courses" [value]="course._id" (click)= 'changeCourse(course._id)'>
           {{course.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-
-
-    <mat-form-field>
+     <mat-form-field>
       <mat-select placeholder="Estudiante">
-        <mat-option *ngFor="let student of students" [value]="student._id">
+        <mat-option *ngFor="let student of students" [value]="student._id" (click)='changeStudent(student._id)'>
           {{student.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Nombre evaluacion" value="">
+        <input matInput  [formControl]='nombre_evaluacion' (change)='onNameTestChange()' placeholder="Nombre evaluacion" value="">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Calificacion" value="">
+        <input  [formControl]='calificacion' (change)='onCalificacionChange()' matInput placeholder="Calificacion" value="">
     </mat-form-field>
   </div>
     <div class='col'>
       <button mat-flat-button color="primary" (click)='createNote()'>Crear</button>
     </div>
 </div>
+
+
+
+
+<table mat-table mat-table [dataSource]="notes" class="mat-elevation-z8" >
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let nota"> {{nota.id_estudiante['name']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre_evaluacion">
+      <th mat-header-cell *matHeaderCellDef> evaluacion </th>
+      <td mat-cell *matCellDef="let nota"> {{nota.nombre_evaluacion}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="calificacion">
+      <th mat-header-cell *matHeaderCellDef> Calificacion </th>
+      <td mat-cell *matCellDef="let nota"> {{nota.calificacion}} </td>
+    </ng-container>
+
+
+
+       <ng-container matColumnDef="curso">
+          <th mat-header-cell *matHeaderCellDef> Curso </th>
+          <td mat-cell *matCellDef="let nota"> {{nota.id_curso['name']}} </td>
+        </ng-container>
+
+      <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let nota">
+            <button  (click)='deleteNota(nota)'>delete</button>
+            <button  (click)='openModal(nota)'>update</button>
+
+          </td>
+      </ng-container>
+
+  <!--  <button mat-flat-button color="primary" (click)='openModal(student)'>View</button> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+
+  </table>
+
+

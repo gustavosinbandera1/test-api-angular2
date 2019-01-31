@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ApiService } from '../services/api.service';
-
-
+import { FormControl } from '@angular/forms';
+import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { template } from '@angular/core/src/render3';
 export interface Food {
   value: string;
   viewValue: string;
@@ -13,16 +17,16 @@ export interface Food {
   styleUrls: ['./nota.component.css']
 })
 export class NotaComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'nombre_evaluacion', 'calificacion' , 'curso', 'actions'];
   courses: any = [];
   students: any = [];
   notes: any = [];
+  calificacion = new FormControl();
+  nombre_evaluacion =  new FormControl();
+  object: any = {};
+  temp: any[] = [];
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, public dialog: MatDialog) {
 
     this.api.getItems('cursos').subscribe((courses) => {
       this.courses = courses;
@@ -43,8 +47,57 @@ export class NotaComponent implements OnInit {
   ngOnInit() {
   }
 
-  createNote() {
-    
+  onNameTestChange() {
+     console.log('el cambio', this.nombre_evaluacion.value);
+    this.object['nombre_evaluacion'] = this.nombre_evaluacion.value;
   }
 
+  onCalificacionChange() {
+     console.log('el cambio', this.calificacion.value);
+    this.object['calificacion'] = this.calificacion.value;
+  }
+
+  changeStudent(selectedId) {
+     console.log('el seleccionado es:', selectedId);
+      this.object['id_estudiante'] = selectedId;
+  }
+
+  changeCourse(courseId) {
+    console.log('el seleccionado es:', courseId);
+      this.object['id_curso'] = courseId;
+  }
+  createNote() {
+    this.api.createItem(this.object, 'notas').subscribe(data => {
+      console.log('esto llega del servicio', data);
+      this.notes = [
+        ...this.notes,
+        data
+      ];
+    });
+  }
+
+  deleteNota() {
+
+  }
+
+  updateNota() {
+
+  }
+
+  openModal(data: any) {
+    console.log('el dato para el modal', data);
+    this.temp.push(data);
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = {
+        notes: this.temp
+      };
+      const dialogRef = this.dialog.open(NoteDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('se cerro la ventana modal');
+        this.temp = [];
+      });
+
+    }
 }

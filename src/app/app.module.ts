@@ -15,6 +15,7 @@ import { NotaComponent } from './nota/nota.component';
 
 import { MaterialModule } from './material.module';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
+import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { StudentDialogComponent } from './student-dialog/student-dialog.componen
     StudentListComponent,
     CursoComponent,
     NotaComponent,
-    StudentDialogComponent
+    StudentDialogComponent,
+    NoteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { StudentDialogComponent } from './student-dialog/student-dialog.componen
   ],
   entryComponents: [
     StudentDialogComponent,
+    NoteDialogComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService],

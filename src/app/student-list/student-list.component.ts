@@ -81,6 +81,8 @@ export class StudentListComponent implements OnInit {
 
   openModal(data: any) {
     this.getStudentNotes(data).subscribe(notes => {
+      console.log('notes como array', notes);
+
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;

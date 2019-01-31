@@ -1,0 +1,35 @@
+<div class='dialogTitle'  class="mat-elevation-z4">
+
+  </div>
+  <mat-dialog-content class="mat-elevation-z4">
+    <ul *ngFor='let nota of notas'>
+        <mat-form-field appearance="standard">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Placeholder" [formControl]="name_user" (input)='onNameStudentChange(nota.id_estudiante,$event.target.value)'  value = "{{nota.id_estudiante.name}}">
+            <mat-hint>Nombre</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>Curso</mat-label>
+          <input matInput placeholder="Placeholder" [formControl]="name_course" (input)='onNameCourseChange(nota.id_curso, $event.target.value)'  value = "{{nota.id_curso.name}}">
+          <mat-hint>Curso</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>N. Evaluacion</mat-label>
+        <input matInput placeholder="Evaluacion" [formControl]="name_test" (input)='onEvaluacionChange($event.target.value)'  value = "{{nota.calificacion}}">
+        <mat-hint>Calificacion</mat-hint>
+    </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Calificacion</mat-label>
+        <input matInput placeholder="Calificacion" [formControl]="calificacion" (input)='onCalificacionChange($event.target.value)'  value = "{{nota.calificacion}}">
+        <mat-hint>curso</mat-hint>
+    </mat-form-field>
+
+    </ul>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+   <button mat-button [mat-dialog-close]='true' (click)='saveData()'>ACEPTAR</button>
+
+  </mat-dialog-actions>

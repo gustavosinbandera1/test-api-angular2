@@ -58,4 +58,12 @@ export class ApiService {
   }
 
 
+  updateItem(item, endpoint): Observable<any> {
+    return this.http.put(`${this._url}/${endpoint}/${item._id}`, item )
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+
 }
